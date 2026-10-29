@@ -8,6 +8,8 @@
 
 参赛选手手册：https://zhangqi.feishu.cn/docx/LQXOdudK5o4Mq9xsx83c5Doznof
 
+Aholo Lux3D 模型资料包：https://lq9n5lvfn2i.feishu.cn/wiki/I5MOwqZLJixmP1k2Gcic6DMdnsc
+
 ## 开放工具
 
 Aholo Lux3D：
@@ -30,3 +32,6 @@ Luxreal：
 - 官网：https://modelscope.cn
 - 文档：https://modelscope.cn/docs/home
 - 魔搭创空间：https://modelscope.cn/studios
+
+奇绩创坛AI额度：
+- 官网&文档：https://credits.openai-next.com/guide
