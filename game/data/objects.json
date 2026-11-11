@@ -1,0 +1,27 @@
+[
+  {
+    "id": "lotus",
+    "scene": "funeral-shop",
+    "title": "纸扎莲花灯",
+    "material": "折纸 · 竹底",
+    "description": "米白的纸花瓣层层叠起，围着一枚暖色灯芯。",
+    "requirement.1": ["grandma-lantern"],
+    "story.1": "奶奶扎到最后一瓣，总要把纸角抚平。灯底压着一小截竹篾，是留给来取灯的人提着走的。"
+  },
+  {
+    "id": "ledger",
+    "scene": "funeral-shop",
+    "title": "柜台上的账簿",
+    "material": "纸页 · 线装封面",
+    "description": "一本摊开的手写账簿，夹着一封还没拆的来信。",
+    "story.1": "这一页只写了半行：「周家，白花一束。钱改日再收。」旁边的信从城里寄来，信封上的地址是去年离开镇上时填的。"
+  },
+  {
+    "id": "wreath",
+    "scene": "funeral-shop",
+    "title": "手编花圈",
+    "material": "竹条 · 纸花",
+    "description": "浅色纸花绕着竹圈排开，底下垂着两条素纸飘带。",
+    "story.1": "竹圈上留了一处空位。家属来取花圈的时候，奶奶会问他们，家里那位生前喜欢什么花。"
+  }
+]

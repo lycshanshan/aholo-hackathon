@@ -1,0 +1,10 @@
+[
+  {
+    "id": "a-seat-by-the-lantern",
+    "title": "留一张凳子",
+    "requirement.1": ["grandma", "lotus", "grandma-lantern"],
+    "story.1": "周家婶子来取灯时，或许还想说起她娘夜里留着的那点亮。纸灯已经备好，门边还有一张竹凳，可以搬来陪她坐一会儿。",
+    "requirement.2": ["grandma", "lotus", "grandma-lantern", "ledger", "wreath"],
+    "story.2": "账簿上的欠款、花圈上空着的位置，都是奶奶给人留的余地。城里来的信还压在账簿底下。等送走来取灯的人，再拆也来得及。"
+  }
+]
