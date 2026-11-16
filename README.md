@@ -135,6 +135,7 @@ python -m http.server 8765 --bind 127.0.0.1 --directory game
 ```
 
 - 用 **WASD** 或 **方向键**沿画面方向走动。触屏设备使用画面左下方的方向按钮。
+- 点按 **Shift** 或底部的步行按钮，在步行和奔跑间切换。
 - 靠近菱形标记后按 **E** 或点交互提示。查看物件时可拖动模型旋转，将指针放在模型上用滚轮缩放。按 **Esc** 或点右上角关闭。
 - 靠近奶奶即可收录人物。交谈时按 **E** 或点「继续」逐句阅读，在最后一句点「结束对话」即可收录人物轶事。
 - 查看莲花灯并完成对话后，解锁《留一张凳子》的第一段。看过账簿和花圈后，解锁第二段。
@@ -152,7 +153,7 @@ python -m http.server 8765 --bind 127.0.0.1 --directory game
 
 账簿和花圈使用 Lux3D 中国站图生 3D，任务 ID 分别为 `5814589` 和 `5814592`。参考图在 [game/assets/references](game/assets/references)，场景和笔记本使用同一份 [ledger.glb](game/assets/ledger.glb) 和 [wreath.glb](game/assets/wreath.glb)。
 
-主角使用 Lux3D 中国站文生 3D 和自动绑骨，任务 ID 分别为 `5814583` 和 `5829505`。[player.glb](game/assets/player.glb) 的腿、手臂和脊柱关节由移动距离驱动。
+主角使用 Lux3D 中国站文生 3D 和自动绑骨，任务 ID 分别为 `5814583` 和 `5829505`。[player-walk.json](game/assets/player-walk.json) 包含适配 [player.glb](game/assets/player.glb) 骨骼的站姿、步行和奔跑动画，随移动距离播放。步行和奔跑分别取自卡内基梅隆大学图形实验室的 [动作捕捉数据 07_06](https://mocap.cs.cmu.edu/search.php?subjectnumber=7) 和 [09_06](https://mocap.cs.cmu.edu/search.php?subjectnumber=9&trinum=6)，数据库由 NSF EIA-0196217 资助。
 
 在 `game/src/shop.js` 调整店内布局和观察点，在 `game/src/assets.js` 调整 GLB 挂载，在 `game/src/player.js` 调整人物。
 

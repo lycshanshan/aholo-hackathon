@@ -16,6 +16,8 @@ const ui = {
   inspect: document.querySelector('#inspect'),
   inspectLabel: document.querySelector('#inspect span'),
   reset: document.querySelector('#reset'),
+  movementMode: document.querySelector('#movement-mode'),
+  movementLabel: document.querySelector('#movement-mode span'),
   dpad: document.querySelector('#dpad'),
 };
 
@@ -214,6 +216,13 @@ function start(data) {
     notebook.openItem(entry);
   }
 
+  let running = false;
+  function toggleRunning() {
+    running = !running;
+    ui.movementMode.setAttribute('aria-pressed', String(running));
+    ui.movementLabel.textContent = running ? '奔跑' : '步行';
+  }
+
   // 弹窗独占交互，对话中的 E 推进当前台词。
   window.addEventListener('keydown', (event) => {
     if (event.altKey || event.ctrlKey || event.metaKey) return;
@@ -226,6 +235,7 @@ function start(data) {
       return;
     }
     if (notebook.dialog.open) return;
+    if (event.key === 'Shift' && !event.repeat) toggleRunning();
     if (directions.has(event.code)) {
       event.preventDefault();
       pressed.add(event.code);
@@ -250,6 +260,8 @@ function start(data) {
     }
   }
   ui.inspect.addEventListener('click', inspectNearby);
+  ui.movementMode.disabled = false;
+  ui.movementMode.addEventListener('click', toggleRunning);
   notebook.dialog.addEventListener('close', updatePrompt);
   dialogue.modal.addEventListener('close', updatePrompt);
   ui.reset.disabled = false;
@@ -272,7 +284,7 @@ function start(data) {
       y += dy;
     }
     movement.copy(right).multiplyScalar(x).addScaledVector(ahead, y).normalize();
-    player.step(movement.x, movement.y, seconds);
+    player.step(movement.x, movement.y, seconds, running);
     updatePrompt();
     updateMarkers(now / 1000, near, progress, dialogue.nextFor);
     renderer.render(scene, camera);

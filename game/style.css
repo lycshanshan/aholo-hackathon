@@ -120,7 +120,11 @@ kbd { border: 1px solid #a9987c65; border-radius: 3px; padding: 3px 6px; color: 
 .controls { color: var(--muted); font-size: 12px; min-height: 59px; }
 .controls div { display: flex; gap: 8px; align-items: center; }
 .controls .or { font-size: 10px; }
-.controls button { margin-left: auto; padding: 7px 0 7px 7px; background: none; border: 0; }
+.controls button { padding: 7px 0; background: none; border: 0; }
+.controls #reset { margin-left: auto; padding-left: 7px; }
+.controls #movement-mode { display: flex; gap: 8px; align-items: center; }
+.controls #movement-mode[aria-pressed="true"] { color: var(--gold); }
+.controls #movement-mode[aria-pressed="true"] kbd { border-color: var(--gold); }
 .controls button:hover { color: var(--gold); }
 
 .dpad { display: none; }

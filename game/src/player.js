@@ -1,10 +1,12 @@
 import * as THREE from 'three';
 import { loadAsset } from './assets.js';
 import { box, ellipsoid, group, spindle } from './geometry.js';
+import { loadPlayerGait, makeRigGait } from './player-gait.js';
 import { bounds, obstacles, spawn } from './shop.js';
 
 const radius = 0.22;
-const speed = 2.4;
+const walkSpeed = 1.18;
+const runSpeed = 2.25;
 
 function canStand(x, z) {
   if (x < bounds.left + radius || x > bounds.right - radius ||
@@ -92,98 +94,71 @@ export function makeGrandma(scene, title, { x, z }) {
   return { mount, fallback: actor };
 }
 
-function jointRotation(model, joint, axis = [1, 0, 0], restRoll = 0) {
-  const name = THREE.PropertyBinding.sanitizeNodeName(`mixamorig:${joint}`);
-  const bone = model.getObjectByName(name);
-  if (!bone?.isBone) throw new Error(`主角模型缺少关节 ${joint}`);
-
-  // 用绑定姿势换算角色的摆动轴，使不同朝向的关节沿同一方向运动。
-  const inverse = bone.getWorldQuaternion(new THREE.Quaternion()).invert();
-  const direction = new THREE.Vector3(...axis).applyQuaternion(inverse);
-  const roll = new THREE.Vector3(0, 0, 1).applyQuaternion(inverse);
-  const relaxed = new THREE.Quaternion().setFromAxisAngle(roll, restRoll);
-  const bind = bone.quaternion.clone();
-  const swing = new THREE.Quaternion();
-  return (angle) => bone.quaternion.copy(bind).multiply(swing.setFromAxisAngle(direction, angle)).multiply(relaxed);
-}
-
-function rigPose(model) {
-  const turnSpine = jointRotation(model, 'Spine', [0, 1, 0]);
-  const legs = ['Left', 'Right'].map((side) => ({
-    hip: jointRotation(model, `${side}UpLeg`),
-    knee: jointRotation(model, `${side}Leg`),
-    arm: jointRotation(model, `${side}Arm`, [1, 0, 0], side === 'Left' ? -0.68 : 0.68),
-  }));
-  return {
-    torso(lift, turn) {
-      model.position.y = lift;
-      turnSpine(turn);
-    },
-    legs,
-  };
-}
-
 export function makePlayer(scene) {
   const actor = group(scene, '年轻传承人');
   const { actor: fallback, torso, legs, arms } = makeActor(actor, '本地主角');
-  let pose = {
-    torso(lift, turn) {
-      torso.position.y = lift;
-      torso.rotation.y = turn;
-    },
-    legs: legs.map(({ hip, knee }, i) => ({
-      hip(angle) { hip.rotation.x = angle; },
-      knee(angle) { knee.rotation.x = angle; },
-      arm(angle) { arms[i].rotation.x = angle; },
-    })),
+  let applyPose = (phase, amount, runBlend) => {
+    const angle = phase * 2 * Math.PI;
+    torso.position.y = (0.024 + 0.04 * runBlend) * amount * Math.abs(Math.sin(angle));
+    torso.rotation.y = (0.07 + 0.10 * runBlend) * amount * Math.sin(angle);
+    torso.rotation.x = 0.15 * amount * runBlend;
+    legs.forEach(({ hip, knee }, i) => {
+      const swing = Math.sin(angle + i * Math.PI);
+      hip.rotation.x = (0.45 + 0.28 * runBlend) * amount * swing;
+      knee.rotation.x = (0.40 + 0.48 * runBlend) * amount * Math.max(0, swing);
+      arms[i].rotation.x = -(0.22 + 0.31 * runBlend) * amount * swing;
+    });
   };
 
   // 移动、碰撞和朝向由同一个角色挂点负责，模型替换时延续当前步态。
-  let stride = 0;
-  let walk = 0;
-  function applyPose() {
-    pose.torso(0.024 * walk * Math.abs(Math.sin(stride)), 0.07 * walk * Math.sin(stride));
-    pose.legs.forEach(({ hip, knee, arm }, i) => {
-      const swing = Math.sin(stride + i * Math.PI);
-      hip(0.52 * walk * swing);
-      knee(0.43 * walk * Math.max(0, swing));
-      arm(-0.29 * walk * swing);
-    });
-  }
+  let walkCycleDistance = 1.12;
+  let runCycleDistance = 1.54;
+  let phase = 0;
+  let motion = 0;
+  let runBlend = 0;
 
   function reset() {
     actor.position.set(spawn.x, 0, spawn.z);
     actor.rotation.y = Math.PI * 0.97;
-    stride = 0;
-    walk = 0;
-    applyPose();
+    phase = 0;
+    motion = 0;
+    runBlend = 0;
+    applyPose(phase, motion, runBlend);
   }
 
-  function step(dx, dz, seconds) {
+  function step(dx, dz, seconds, running = false) {
     const { x, z } = actor.position;
+    runBlend = THREE.MathUtils.damp(runBlend, Number(running), 14, seconds);
+    const speed = THREE.MathUtils.lerp(walkSpeed, runSpeed, runBlend);
     if (dx || dz) {
       const nx = x + dx * seconds * speed;
       const nz = z + dz * seconds * speed;
       if (canStand(nx, z)) actor.position.x = nx;
       if (canStand(actor.position.x, nz)) actor.position.z = nz;
+    }
 
-      const heading = Math.atan2(dx, dz);
+    const movedX = actor.position.x - x;
+    const movedZ = actor.position.z - z;
+    const distance = Math.hypot(movedX, movedZ);
+    if (dx || dz) {
+      const heading = distance > 0.0001 ? Math.atan2(movedX, movedZ) : Math.atan2(dx, dz);
       const angle = heading - actor.rotation.y;
       actor.rotation.y += Math.atan2(Math.sin(angle), Math.cos(angle)) * (1 - Math.exp(-15 * seconds));
     }
-
-    const distance = Math.hypot(actor.position.x - x, actor.position.z - z);
-    stride += distance * 7.2;
-    walk = THREE.MathUtils.damp(walk, distance > 0.0001 ? 1 : 0, 12, seconds);
-    applyPose();
+    const cycleDistance = THREE.MathUtils.lerp(walkCycleDistance, runCycleDistance, runBlend);
+    phase = (phase + distance / cycleDistance) % 1;
+    motion = THREE.MathUtils.damp(motion, distance > 0.0001 ? 1 : 0, 12, seconds);
+    applyPose(phase, motion, runBlend);
   }
 
   reset();
-  loadAsset('player').then((model) => {
-    pose = rigPose(model);
+  Promise.all([loadAsset('player'), loadPlayerGait()]).then(([model, gait]) => {
+    walkCycleDistance = gait.cycleDistance;
+    runCycleDistance = gait.runCycleDistance;
+    applyPose = makeRigGait(model, gait);
     actor.add(model);
     actor.remove(fallback);
-    applyPose();
+    applyPose(phase, motion, runBlend);
   }).catch((error) => console.warn('主角模型加载失败，已保留本地模型。', error));
   return { actor, step, reset };
 }
