@@ -2,22 +2,9 @@ import * as THREE from 'three';
 import { loadAsset } from './assets.js';
 import { box, ellipsoid, group, spindle } from './geometry.js';
 import { loadPlayerGait, makeRigGait } from './player-gait.js';
-import { bounds, obstacles, spawn } from './shop.js';
 
-const radius = 0.22;
 const walkSpeed = 1.18;
 const runSpeed = 2.25;
-
-function canStand(x, z) {
-  if (x < bounds.left + radius || x > bounds.right - radius ||
-      z < bounds.back + radius || z > bounds.front - radius) return false;
-
-  return !obstacles.some(({ left, right, back, front }) => {
-    const dx = x - THREE.MathUtils.clamp(x, left, right);
-    const dz = z - THREE.MathUtils.clamp(z, back, front);
-    return dx * dx + dz * dz < radius * radius;
-  });
-}
 
 function makeActor(scene, name, elder = false) {
   const actor = group(scene, name);
@@ -116,9 +103,13 @@ export function makePlayer(scene) {
   let phase = 0;
   let motion = 0;
   let runBlend = 0;
+  let area;
 
-  function reset() {
+  function reset(nextArea = area) {
+    area = nextArea;
+    const { spawn, collision } = area;
     actor.position.set(spawn.x, 0, spawn.z);
+    collision.keepClear(actor.position);
     actor.rotation.y = Math.PI * 0.97;
     phase = 0;
     motion = 0;
@@ -127,14 +118,16 @@ export function makePlayer(scene) {
   }
 
   function step(dx, dz, seconds, running = false) {
+    const { collision } = area;
+    collision.keepClear(actor.position);
     const { x, z } = actor.position;
     runBlend = THREE.MathUtils.damp(runBlend, Number(running), 14, seconds);
     const speed = THREE.MathUtils.lerp(walkSpeed, runSpeed, runBlend);
     if (dx || dz) {
       const nx = x + dx * seconds * speed;
       const nz = z + dz * seconds * speed;
-      if (canStand(nx, z)) actor.position.x = nx;
-      if (canStand(actor.position.x, nz)) actor.position.z = nz;
+      if (collision.canStand(nx, z)) actor.position.x = nx;
+      if (collision.canStand(actor.position.x, nz)) actor.position.z = nz;
     }
 
     const movedX = actor.position.x - x;
@@ -151,7 +144,6 @@ export function makePlayer(scene) {
     applyPose(phase, motion, runBlend);
   }
 
-  reset();
   Promise.all([loadAsset('player'), loadPlayerGait()]).then(([model, gait]) => {
     walkCycleDistance = gait.cycleDistance;
     runCycleDistance = gait.runCycleDistance;

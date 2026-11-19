@@ -5,8 +5,8 @@ export function createDialogue(dialogs, characters, progress, onOpen, onComplete
   const counter = document.querySelector('#conversation-count');
   const next = document.querySelector('#conversation-next');
   const names = new Map(characters.map(({ id, title }) => [id, title]));
-  names.set('me', '主角');
-  const ordered = [...dialogs].sort((a, b) => a.index - b.index);
+  names.set('me', names.get('a-zhou'));
+  let ordered = [...dialogs].sort((a, b) => a.index - b.index);
   const lastReplay = new Map();
   let active;
   let lineIndex;
@@ -47,11 +47,18 @@ export function createDialogue(dialogs, characters, progress, onOpen, onComplete
     }
     // 提前退出时保留本轮对话，读完后再推进或解锁故事。
     if (progress.has(active.id)) lastReplay.set(active.trigger, active.id);
-    const changed = progress.record(active.id);
+    const completed = active.id;
+    const changed = progress.record(completed);
     modal.close();
-    if (changed) onComplete();
+    if (changed) onComplete(completed);
   }
 
   next.addEventListener('click', advance);
-  return { modal, nextFor, openFor, advance };
+  return {
+    modal, nextFor, openFor, advance,
+    setScene(id) {
+      ordered = dialogs.filter(({ scene }) => scene === id).sort((a, b) => a.index - b.index);
+      lastReplay.clear();
+    },
+  };
 }

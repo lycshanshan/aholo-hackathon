@@ -1,0 +1,143 @@
+{
+  "schema": "lux3d.delivery-bundle/v1",
+  "createdAt": "2026-11-19T09:09:51+00:00",
+  "title": "守灯人 · 相框交互部件",
+  "status": "incomplete",
+  "assetStatus": "complete",
+  "preview": {
+    "status": "generated",
+    "path": "preview.html",
+    "locale": "zh-CN"
+  },
+  "items": [
+    {
+      "id": "frame-body",
+      "label": "木相框主体",
+      "attemptIds": [
+        "frame-body-generation"
+      ],
+      "selectedAttemptId": "frame-body-generation",
+      "artifactIds": [
+        "frame-body-generation:glb"
+      ],
+      "status": "complete"
+    },
+    {
+      "id": "frame-support",
+      "label": "相框背撑",
+      "attemptIds": [
+        "frame-support-generation"
+      ],
+      "selectedAttemptId": "frame-support-generation",
+      "artifactIds": [
+        "frame-support-generation:glb"
+      ],
+      "status": "complete"
+    }
+  ],
+  "attempts": [
+    {
+      "id": "frame-body-generation",
+      "taskRef": "cn:8421206",
+      "status": "succeeded",
+      "localStartedAt": "2026-11-19T08:49:46.198391+00:00",
+      "localUpdatedAt": "2026-11-19T08:52:26.194007+00:00",
+      "localCompletedAt": "2026-11-19T08:52:26.194007+00:00",
+      "localDurationMs": 159995,
+      "artifactIds": [
+        "frame-body-generation:glb"
+      ]
+    },
+    {
+      "id": "frame-support-generation",
+      "taskRef": "cn:8421495",
+      "status": "succeeded",
+      "localStartedAt": "2026-11-19T08:52:26.508761+00:00",
+      "localUpdatedAt": "2026-11-19T08:54:21.963603+00:00",
+      "localCompletedAt": "2026-11-19T08:54:21.963603+00:00",
+      "localDurationMs": 115454,
+      "artifactIds": [
+        "frame-support-generation:glb"
+      ]
+    }
+  ],
+  "tasks": [
+    {
+      "id": "cn:8421206",
+      "taskId": "8421206",
+      "region": "cn",
+      "operation": "image-to-3d",
+      "version": "G1-Turbo",
+      "providerStatus": 3,
+      "createdAt": null,
+      "creationSources": [],
+      "durationMs": null,
+      "actualCredits": {
+        "status": "unavailable",
+        "value": null,
+        "source": null
+      }
+    },
+    {
+      "id": "cn:8421495",
+      "taskId": "8421495",
+      "region": "cn",
+      "operation": "image-to-3d",
+      "version": "G1-Turbo",
+      "providerStatus": 3,
+      "createdAt": null,
+      "creationSources": [],
+      "durationMs": null,
+      "actualCredits": {
+        "status": "unavailable",
+        "value": null,
+        "source": null
+      }
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "assets/frame-body-generation/glb.glb",
+      "format": "glb",
+      "size": 6940820,
+      "sha256": "2c7ce85a4b3c21f7fe0ae8709bd641d5b8a9c1128a2d6f5e02b22624038e245f",
+      "validation": {
+        "valid": true,
+        "glbVersion": 2,
+        "assetVersion": "2.0",
+        "scenes": 1,
+        "nodes": 2,
+        "meshes": 1,
+        "materials": 1
+      },
+      "id": "frame-body-generation:glb",
+      "attemptId": "frame-body-generation",
+      "taskRef": "cn:8421206"
+    },
+    {
+      "path": "assets/frame-support-generation/glb.glb",
+      "format": "glb",
+      "size": 6066732,
+      "sha256": "8aaa7069e3e4fc8092dea7a8f58345ebe841cfe80ca620baf67e21d87b6f3f87",
+      "validation": {
+        "valid": true,
+        "glbVersion": 2,
+        "assetVersion": "2.0",
+        "scenes": 1,
+        "nodes": 2,
+        "meshes": 1,
+        "materials": 1
+      },
+      "id": "frame-support-generation:glb",
+      "attemptId": "frame-support-generation",
+      "taskRef": "cn:8421495"
+    }
+  ],
+  "credits": {
+    "status": "incomplete",
+    "total": null
+  },
+  "scene": {
+    "status": "not-requested"
+  }
+}

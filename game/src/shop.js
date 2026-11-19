@@ -4,15 +4,6 @@ import { box, canvasTexture, ellipsoid, group, mesh, randomFrom, spindle, surfac
 export const shopId = 'funeral-shop';
 export const bounds = { left: -4.68, right: 4.68, back: -3.24, front: 4.02 };
 export const spawn = { x: 0.62, z: 2.77 };
-export const grandma = { id: 'grandma', kind: 'characters', x: -0.66, z: -1.63, height: 1.78, reach: 1.27 };
-export const obstacles = [
-  { left: 0.85, right: 4.05, back: -1.43, front: -0.43 },
-  { left: 0.85, right: 4.57, back: -3.25, front: -2.63 },
-  { left: -4.6, right: -2.97, back: -2.39, front: -1.50 },
-  { left: -4.71, right: -3.47, back: 0.12, front: 1.48 },
-  { left: -4.6, right: -3.61, back: 1.70, front: 2.35 },
-  { left: grandma.x - 0.25, right: grandma.x + 0.25, back: grandma.z - 0.16, front: grandma.z + 0.16 },
-];
 
 export const objectPoints = [
   { id: 'lotus', x: 1.39, z: -0.82, height: 1.66, reach: 1.27, elevation: 0.59 },
@@ -28,7 +19,7 @@ const jade = '#718072';
 const red = '#945e4d';
 const paper = ['#eee1c3', '#dec9a2', '#bca688', '#c7c1a4'];
 
-function architecture(root) {
+function architecture(root, solid) {
   const wood = surfaceTexture('wood', '#8f674c', 99);
   const woodShades = ['#9b7556', '#8b674d', '#a27a58', '#967052'].map((color, i) => surfaceTexture('wood', color, 33 + i));
   const plaster = surfaceTexture('stone', '#b4a384', 52);
@@ -61,26 +52,27 @@ function architecture(root) {
     box(root, '#747063', (i - 7) * 0.68, -0.242, 4.485, 0.656, 0.146, 0.049);
   }
 
-  box(root, plaster, 0, 1.68, -3.46, 9.91, 3.36, 0.31);
-  box(root, plaster, -4.83, 0.57, -0.20, 0.30, 1.14, 6.43);
+  // 地坪与门槛可通行，墙根和伸进店内的立柱参与碰撞。
+  solid(box(root, plaster, 0, 1.68, -3.46, 9.91, 3.36, 0.31));
+  solid(box(root, plaster, -4.83, 0.57, -0.20, 0.30, 1.14, 6.43));
   box(root, plaster, -4.83, 3.01, -0.20, 0.30, 0.72, 6.43);
   box(root, plaster, -4.83, 1.89, -1.95, 0.30, 1.52, 2.94);
   box(root, plaster, -4.83, 1.89, 2.40, 0.30, 1.52, 1.23);
 
   for (const x of [-4.72, -2.59, 0.76, 4.70]) {
-    box(root, wood, x, 1.68, -3.24, 0.16, 3.36, 0.22);
-    box(root, foundation, x, 0.11, -3.24, 0.26, 0.22, 0.27);
+    solid(box(root, wood, x, 1.68, -3.24, 0.16, 3.36, 0.22));
+    solid(box(root, foundation, x, 0.11, -3.24, 0.26, 0.22, 0.27));
   }
   for (const z of [-3.24, -0.47, 1.80, 2.93]) {
-    box(root, wood, -4.68, 1.70, z, 0.20, 3.4, 0.18);
+    solid(box(root, wood, -4.68, 1.70, z, 0.20, 3.4, 0.18));
   }
   box(root, dark, 0, 3.35, -3.25, 10.01, 0.23, 0.30);
   box(root, dark, -4.73, 3.35, -0.14, 0.30, 0.23, 6.50);
   box(root, wood, 0, 3.51, -3.39, 10.20, 0.12, 0.48);
   box(root, wood, -4.80, 3.51, -0.13, 0.48, 0.12, 6.68);
-  box(root, trim, 0, 0.19, -3.265, 9.89, 0.16, 0.10);
-  box(root, trim, -4.665, 0.19, -0.18, 0.11, 0.16, 6.43);
-  box(root, wood, -4.63, 1.145, 0.66, 0.38, 0.11, 2.20);
+  solid(box(root, trim, 0, 0.19, -3.265, 9.89, 0.16, 0.10));
+  solid(box(root, trim, -4.665, 0.19, -0.18, 0.11, 0.16, 6.43));
+  solid(box(root, wood, -4.63, 1.145, 0.66, 0.38, 0.11, 2.20));
   box(root, wood, -4.63, 2.642, 0.66, 0.26, 0.09, 2.20);
   for (let i = 0; i < 7; i++) box(root, trim, -4.71, 1.90, -0.40 + i * 0.352, 0.09, 1.42, 0.045);
   box(root, trim, -4.71, 1.78, 0.66, 0.075, 0.06, 2.14);
@@ -93,6 +85,7 @@ function architecture(root) {
   for (const y of [0.31, 1.94]) box(door, trim, 0, y, 0.115, 1.50, 0.10, 0.04);
   const handle = mesh(door, new THREE.TorusGeometry(0.054, 0.010, 6, 16), '#b3925c', 0.49, 1.11, 0.159);
   handle.rotation.x = 0.09;
+  solid(door);
 
   const window = group(root, '后窗', -0.96, 1.99, -3.26);
   const glow = new THREE.MeshStandardMaterial({ color: '#e2c991', emissive: '#b57f43', emissiveIntensity: 0.30, roughness: 0.9 });
@@ -100,7 +93,7 @@ function architecture(root) {
   box(window, glow, 0, 0, 0.09, 2.37, 1.04, 0.05);
   for (let i = 0; i < 8; i++) box(window, trim, (i - 3.5) * 0.32, 0, 0.127, 0.044, 1.08, 0.041);
   for (const y of [-0.27, 0.23]) box(window, trim, 0, y, 0.132, 2.43, 0.045, 0.044);
-  box(window, wood, 0, -0.612, 0.11, 2.73, 0.105, 0.38);
+  solid(box(window, wood, 0, -0.612, 0.11, 2.73, 0.105, 0.38));
   for (let i = 0; i < 6; i++) {
     const x = -4.63 + i * 1.83;
     box(root, trim, x, 3.38, -3.07, 0.18, 0.17, 0.53);
@@ -132,6 +125,7 @@ function paperBundle(parent, x, y, z, width, depth, color, angle) {
     box(pack, i % 2 ? '#e2cbaa' : color, 0.013 * (i % 3 - 1), i * 0.017, 0, width, 0.015, depth);
   }
   box(pack, '#9f7560', 0.09 * width, 0.033, 0, 0.028, 0.09, depth + 0.014);
+  return pack;
 }
 
 function jar(parent, x, y, z, radius, color) {
@@ -143,7 +137,10 @@ function jar(parent, x, y, z, radius, color) {
 }
 
 function shelf(root) {
-  const rack = group(root, '纸料货架', 2.71, 0, -2.91);
+  const mount = group(root, '纸料货架', 2.71, 0, -2.81);
+  mount.scale.x = 1.42;
+  const rack = group(mount, '纸料货架', 0, 0, -0.1);
+  rack.scale.x = 1 / mount.scale.x;
   box(rack, '#544131', 0, 1.37, -0.22, 3.64, 2.73, 0.085);
   for (const x of [-1.80, 0, 1.80]) box(rack, trim, x, 1.38, 0, 0.12, 2.76, 0.60);
   for (const y of [0.21, 0.81, 1.44, 2.10, 2.73]) box(rack, lightWood, 0, y, 0, 3.74, 0.095, 0.59);
@@ -163,6 +160,7 @@ function shelf(root) {
     roll.rotation.z = (i % 5 - 2) * 0.046;
   }
   jar(rack, 1.22, 2.148, 0.025, 0.24, '#9e7759');
+  return { mount, fallback: rack };
 }
 
 function ledger(root) {
@@ -196,7 +194,7 @@ function ledger(root) {
   return { mount, fallback: book };
 }
 
-function paperLotus(parent) {
+export function paperLotus(parent) {
   const lotus = group(parent, '本地纸扎莲花灯');
   spindle(lotus, dark, 0, 0.023, 0, 0.21, 0.205, 0.046, 16);
   spindle(lotus, '#a2865d', 0, 0.052, 0, 0.21, 0.21, 0.019, 16);
@@ -223,8 +221,9 @@ function paperLotus(parent) {
   return lotus;
 }
 
-function counter(root) {
-  const table = group(root, '木柜台', 2.45, 0, -0.93);
+function counter(root, solid) {
+  const tableMount = group(root, '木柜台', 2.45, 0, -0.93);
+  const table = group(tableMount, '木柜台');
   box(table, dark, 0, 0.10, 0, 3.04, 0.20, 0.82);
   box(table, trim, 0, 0.57, 0, 3.03, 0.85, 0.84);
   for (const x of [-1.00, 0, 1.00]) {
@@ -234,13 +233,13 @@ function counter(root) {
   }
   box(table, lightWood, 0, 1.00, 0, 3.21, 0.115, 1.00);
   box(table, dark, 0, 0.912, 0.47, 3.14, 0.047, 0.073);
-  jar(root, 2.32, 1.059, -1.01, 0.139, jade);
-  paperBundle(root, 3.58, 1.07, -1.21, 0.40, 0.21, paper[1], 0.07);
+  solid(jar(root, 2.32, 1.059, -1.01, 0.139, jade));
+  solid(paperBundle(root, 3.58, 1.07, -1.21, 0.40, 0.21, paper[1], 0.07));
   const mount = group(root, '莲花灯模型挂点', 1.39, 1.059, -0.82);
-  return { lotus: { mount, fallback: paperLotus(mount) }, ledger: ledger(root) };
+  return { counter: { mount: tableMount, fallback: table }, lotus: { mount, fallback: paperLotus(mount) }, ledger: ledger(root) };
 }
 
-function wreath(root) {
+function wreath(root, solid) {
   const stand = group(root, '手编花圈', -3.83, 0, -1.94);
   stand.rotation.y = 0.23;
   for (const x of [-0.35, 0.35]) {
@@ -251,7 +250,11 @@ function wreath(root) {
   const backLeg = box(stand, dark, 0, 0.79, -0.19, 0.068, 1.60, 0.062);
   backLeg.rotation.x = 0.27;
   box(stand, trim, 0, 0.97, 0.17, 0.78, 0.071, 0.071);
-  const mount = group(stand, '花圈模型挂点', 0, 0.98, 0.21);
+  solid(stand);
+  // 花架留在原处，花圈的场景坐标可随备物动作单独改变。
+  const offset = new THREE.Vector3(0, 0.98, 0.21).applyEuler(stand.rotation).add(stand.position);
+  const mount = group(root, '花圈模型挂点', offset.x, offset.y, offset.z);
+  mount.rotation.y = stand.rotation.y;
   const ring = group(mount, '花圈本体', 0, -0.98, -0.21);
   const frame = mesh(ring, new THREE.TorusGeometry(0.50, 0.062, 7, 40), '#ad9667', 0, 1.65, 0.18);
   frame.scale.y = 1.11;
@@ -289,14 +292,7 @@ function workbench(root) {
     const stick = spindle(table, '#aa854e', -0.29 + i * 0.042, 1.08, 0.36, 0.012, 0.012, 0.37, 5);
     stick.rotation.z = (i - 1.5) * 0.18;
   }
-  const stool = group(root, '竹凳', -4.12, 0, 2.03);
-  spindle(stool, lightWood, 0, 0.41, 0, 0.32, 0.31, 0.10);
-  for (let i = 0; i < 4; i++) {
-    const angle = Math.PI * (i + 0.5) / 2;
-    const leg = spindle(stool, trim, Math.sin(angle) * 0.21, 0.185, Math.cos(angle) * 0.21, 0.034, 0.043, 0.37, 7);
-    leg.rotation.x = -Math.cos(angle) * 0.17;
-    leg.rotation.z = Math.sin(angle) * 0.17;
-  }
+  return table;
 }
 
 function hangingLantern(root, x, z) {
@@ -314,10 +310,10 @@ function hangingLantern(root, x, z) {
   root.add(light);
 }
 
-function storefront(root) {
-  box(root, trim, -4.80, 1.66, 2.96, 0.22, 3.32, 0.24);
+function storefront(root, solid) {
+  solid(box(root, trim, -4.80, 1.66, 2.96, 0.22, 3.32, 0.24));
   box(root, dark, -4.48, 3.27, 2.96, 0.83, 0.18, 0.24);
-  box(root, '#857769', -4.80, 0.16, 2.96, 0.35, 0.32, 0.35);
+  solid(box(root, '#857769', -4.80, 0.16, 2.96, 0.35, 0.32, 0.35));
   const mat = surfaceTexture('wood', '#b7a383', 15);
   box(root, mat, 0.62, 0.007, 2.68, 1.34, 0.014, 0.39);
   for (let i = 0; i < 10; i++) box(root, '#6e604c', 0.032 + i * 0.132, 0.016, 2.68, 0.013, 0.005, 0.365);
@@ -329,14 +325,14 @@ function storefront(root) {
   }
 }
 
-export function buildShop(scene) {
+export function buildShop(scene, solid) {
   const root = group(scene, '白事店');
-  architecture(root);
+  architecture(root, solid);
   shopSign(root);
-  shelf(root);
-  const wreathModel = wreath(root);
-  workbench(root);
+  const cabinet = shelf(root);
+  const wreathModel = wreath(root, solid);
+  solid(workbench(root));
   hangingLantern(root, 4.34, -2.15);
-  storefront(root);
-  return { ...counter(root), wreath: wreathModel };
+  storefront(root, solid);
+  return { ...counter(root, solid), cabinet, wreath: wreathModel };
 }

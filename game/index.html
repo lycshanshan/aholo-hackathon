@@ -17,7 +17,6 @@
     <header class="masthead">
       <div class="wordmark"><span class="seal" aria-hidden="true">灯</span> 守灯人 <span class="translation">THE LANTERN KEEPER</span></div>
       <div class="masthead-actions">
-        <span class="edition">故事原型 <span>·</span> 01</span>
         <button type="button" class="notebook-button" id="open-notebook" aria-haspopup="dialog" aria-keyshortcuts="N" title="打开笔记本 (N)">
           <svg viewBox="0 0 20 20" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.25" aria-hidden="true">
             <path d="M6 3h10v14H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Zm0 14v-3h10M8 6.5h5m-5 3h4"/>
@@ -28,18 +27,23 @@
     </header>
     <main>
       <section class="chapter" aria-labelledby="chapter-title">
-        <p class="eyebrow"><span>壹</span> 第一幕 / <b id="chapter-name"></b></p>
+        <p class="eyebrow" id="chapter-name"></p>
         <h1 id="chapter-title"></h1>
         <p class="scene-time"><b id="scene-place"></b><span></span><b id="scene-time"></b></p>
         <p class="intro" id="scene-intro"></p>
         <div class="rule"></div>
         <p class="hint" id="guide"></p>
-        <p class="progress">物件 <strong id="count">00</strong> / <span id="object-total"></span></p>
+        <div class="chapter-actions">
+          <button type="button" id="chapter-next" class="chapter-next" hidden></button>
+          <button type="button" id="chapter-skip" class="chapter-skip" hidden>跳过选项</button>
+        </div>
       </section>
       <section class="stage" id="stage" aria-labelledby="chapter-title" aria-describedby="guide">
-        <div class="stage-label"><i></i> 第一幕 <b>01</b></div>
+        <div class="stage-label"><i></i><b id="stage-chapter"></b></div>
         <div class="stage-place" id="stage-place"></div>
-        <p id="loading" role="status">正在点亮店里的灯……</p>
+        <p id="loading" role="status">正在载入……</p>
+        <p id="scene-notice" class="scene-notice" role="status" hidden></p>
+        <div class="scene-curtain" id="scene-curtain" aria-hidden="true"></div>
         <button type="button" class="inspect" id="inspect" hidden><kbd>E</kbd><span></span></button>
         <div class="dpad" id="dpad" aria-label="移动角色">
           <button type="button" data-move="ArrowUp" aria-label="向上">↑</button>
@@ -59,7 +63,8 @@
   </div>
   <dialog id="journal" class="folio" aria-labelledby="notebook-title">
     <header class="folio-header">
-      <div class="folio-brand"><span aria-hidden="true">记</span> 店内见闻</div>
+      <div class="folio-brand"><span aria-hidden="true">记</span> 见闻</div>
+      <button type="button" class="folio-back" id="journal-skip" hidden>跳过选项</button>
       <button type="button" class="folio-back" id="notebook-back" hidden>← 返回笔记本</button>
       <form method="dialog"><button type="submit" class="folio-close" aria-label="关闭" title="关闭 (Esc)">×</button></form>
     </header>
@@ -115,6 +120,27 @@
       <span id="conversation-count"></span>
       <button type="button" id="conversation-next"></button>
     </footer>
+  </dialog>
+  <dialog id="activity" class="folio activity" aria-labelledby="activity-title">
+    <header class="folio-header">
+      <div class="folio-brand"><span aria-hidden="true">灯</span><span id="activity-kind"></span></div>
+      <button type="button" class="folio-back" id="activity-skip" hidden>跳过选项</button>
+      <form method="dialog"><button type="submit" class="folio-close" aria-label="关闭" title="关闭 (Esc)">×</button></form>
+    </header>
+    <div class="activity-body">
+      <div class="activity-copy">
+        <h2 id="activity-title" tabindex="-1"></h2>
+        <p id="activity-description"></p>
+        <p id="activity-feedback" class="activity-feedback" role="status" hidden></p>
+      </div>
+      <div id="activity-model" class="model-view activity-model" hidden></div>
+      <section id="activity-puzzle" class="puzzle" hidden></section>
+      <label id="activity-drag" class="activity-drag" hidden>
+        <span id="activity-drag-label"></span>
+        <input type="range" id="activity-drag-range" min="0" max="100" value="0">
+      </label>
+      <div class="activity-options" id="activity-options"></div>
+    </div>
   </dialog>
 </body>
 </html>

@@ -1,4 +1,4 @@
-const files = ['scenes', 'objects', 'characters', 'dialogs', 'stories'];
+const files = ['scenes', 'objects', 'characters', 'dialogs', 'stories', 'actions', 'puzzles'];
 
 function numberedFields(entry, pattern) {
   return Object.entries(entry)
@@ -23,9 +23,11 @@ export async function loadGameData() {
     if (!response.ok) throw new Error(`无法读取 ${name}.json（${response.status}）`);
     return response.json();
   }));
-  const [scenes, objects, characters, dialogs, stories] = lists;
+  const [scenes, objects, characters, dialogs, stories, actions, puzzles] = lists;
   return {
     scenes,
+    actions,
+    puzzles,
     objects: objects.map(readSections),
     characters: characters.map(readSections),
     dialogs: dialogs.map((entry) => ({

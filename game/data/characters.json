@@ -2,9 +2,43 @@
   {
     "id": "grandma",
     "title": "奶奶",
-    "identity": "白事店店主",
-    "description": "在旧街做了几十年白事，镇上的人遇到丧事，常来找她扎纸灯、备纸花。",
-    "requirement.1": ["grandma-lantern"],
-    "story.1": "奶奶习惯把竹凳放在柜台外头。来取纸扎的人若想说几句，她便搁下手里的活，等人家慢慢说完。"
+    "identity": "白事店店主 · 阿舟的师父",
+    "description": "在旧街做了几十年白事。来取纸扎的人若想说几句，她便搁下手里的活。",
+    "requirement.1": [
+      "last-words"
+    ],
+    "story.1": "临走前，她托阿舟收完周家的莲花灯。最后一瓣先留活口，让人家亲手试提。"
+  },
+  {
+    "id": "a-zhou",
+    "title": "阿舟",
+    "identity": "纸扎手艺的传人",
+    "description": "跟奶奶学了十年纸扎，也跟着她上门备物和主持送别。"
+  },
+  {
+    "id": "aunt-zhou",
+    "title": "周家婶子",
+    "identity": "旧街的来客",
+    "description": "曾来店里订白花和莲花灯。她娘夜里嫌堂屋暗，总要人再点上灯。",
+    "requirement.1": [
+      "zhou-farewell"
+    ],
+    "story.1": "奶奶送别那天，她坐回那张竹凳，提起阿舟接着做完的灯。"
+  },
+  {
+    "id": "uncle-chen",
+    "title": "陈伯",
+    "identity": "旧街邻居",
+    "description": "和奶奶相识多年，帮着把祠堂的长案抬到院里。",
+    "requirement.1": [
+      "chen-farewell"
+    ],
+    "story.1": "他一眼认出花圈上那枝桂花，是从奶奶屋门边那棵树上剪下来的。"
+  },
+  {
+    "id": "ye-he",
+    "title": "叶禾",
+    "identity": "县城新馆的职员",
+    "description": "请陈伯把招纸扎工的信捎给阿舟。入冬后，她带来了排班表。"
   }
 ]

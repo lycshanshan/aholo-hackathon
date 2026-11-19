@@ -1,27 +1,100 @@
 [
   {
-    "id": "lotus",
-    "scene": "funeral-shop",
-    "title": "纸扎莲花灯",
-    "material": "折纸 · 竹底",
-    "description": "米白的纸花瓣层层叠起，围着一枚暖色灯芯。",
-    "requirement.1": ["grandma-lantern"],
-    "story.1": "奶奶扎到最后一瓣，总要把纸角抚平。灯底压着一小截竹篾，是留给来取灯的人提着走的。"
+    "id": "clinic-stool",
+    "scene": "clinic",
+    "title": "床边的竹凳",
+    "material": "竹篾 · 竹脚",
+    "description": "凳脚一粗一细。细的那根是阿舟刚学手艺时削的。"
   },
   {
     "id": "ledger",
     "scene": "funeral-shop",
     "title": "柜台上的账簿",
-    "material": "纸页 · 线装封面",
-    "description": "一本摊开的手写账簿，夹着一封还没拆的来信。",
-    "story.1": "这一页只写了半行：「周家，白花一束。钱改日再收。」旁边的信从城里寄来，信封上的地址是去年离开镇上时填的。"
+    "material": "线装纸册",
+    "description": "两行旧字。「周家，白花一束。钱改日再收。」账簿下压着一封县城来的信。"
+  },
+  {
+    "id": "lotus",
+    "scene": "funeral-shop",
+    "title": "纸扎莲花灯",
+    "material": "米白纸 · 竹底",
+    "description": "只差最后一道纸瓣。竹底留着嵌提手的小孔。"
   },
   {
     "id": "wreath",
     "scene": "funeral-shop",
     "title": "手编花圈",
     "material": "竹条 · 纸花",
-    "description": "浅色纸花绕着竹圈排开，底下垂着两条素纸飘带。",
-    "story.1": "竹圈上留了一处空位。家属来取花圈的时候，奶奶会问他们，家里那位生前喜欢什么花。"
+    "description": "竹圈上空着一处，纸条上写着「桂花一小枝，到了再插」。"
+  },
+  {
+    "id": "osmanthus",
+    "scene": "funeral",
+    "title": "院里的桂花",
+    "material": "桂花枝 · 素纸",
+    "description": "奶奶屋门边那棵桂花开得迟。这枝用素纸包好，放在长案一侧。"
+  },
+  {
+    "id": "lin-worn-floor",
+    "scene": "lin",
+    "title": "堂屋的地砖",
+    "material": "青砖",
+    "description": "从门到水桌的砖面磨得发亮。端着托盘的人要沿这儿走。"
+  },
+  {
+    "id": "lin-gate",
+    "scene": "lin",
+    "title": "合到一半的院门",
+    "material": "木板",
+    "description": "门缝对着右边的矮台。家属留话说，小弟天黑才到，灯从门缝里得看得见。"
+  },
+  {
+    "id": "wang-photos",
+    "scene": "wang",
+    "title": "柜台上的旧相片",
+    "material": "相纸",
+    "description": "嫂子想留他穿围裙、在柜台后头的那一张。旧照裂成了几块，玻璃糖罐的边线还看得清。"
+  },
+  {
+    "id": "wang-groove",
+    "scene": "wang",
+    "title": "柜台内沿的木槽",
+    "material": "木框 · 玻璃",
+    "description": "卷帘门底漏风。内沿有一道木槽，正好可以卡住相框的背撑。"
+  },
+  {
+    "id": "du-shaving",
+    "scene": "du",
+    "title": "收工前的木料",
+    "material": "松木",
+    "description": "木面留着一道浅宽的刨痕。徒弟说，这是师父收工前推过的最后一趟。"
+  },
+  {
+    "id": "du-supports",
+    "scene": "du",
+    "title": "三个托座",
+    "material": "木料 · 棉布",
+    "description": "平托盘、软布垫和中央开槽的木托摆在一起。刨口下露着薄薄一线钢刃。"
+  },
+  {
+    "id": "delivery-note",
+    "scene": "decision",
+    "title": "进货回条",
+    "material": "账纸",
+    "description": "纸料整箱起订，款到发货。陈伯愿意合订一半，另一半由阿舟先垫。"
+  },
+  {
+    "id": "city-letter",
+    "scene": "decision",
+    "title": "县城来的信",
+    "material": "信笺 · 牛皮纸",
+    "description": "县城新馆招纸扎工。馆里包原料，工资按月结，前半年有宿舍床位。"
+  },
+  {
+    "id": "city-catalog",
+    "scene": "city-work",
+    "title": "纸扎间的目录",
+    "material": "装订图册",
+    "description": "第七号，素白花圈，素色飘带。订货单背面多出一行「家里人想自己添一枝花」。"
   }
 ]

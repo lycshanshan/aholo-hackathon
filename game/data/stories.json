@@ -2,9 +2,101 @@
   {
     "id": "a-seat-by-the-lantern",
     "title": "留一张凳子",
-    "requirement.1": ["grandma", "lotus", "grandma-lantern"],
-    "story.1": "周家婶子来取灯时，或许还想说起她娘夜里留着的那点亮。纸灯已经备好，门边还有一张竹凳，可以搬来陪她坐一会儿。",
-    "requirement.2": ["grandma", "lotus", "grandma-lantern", "ledger", "wreath"],
-    "story.2": "账簿上的欠款、花圈上空着的位置，都是奶奶给人留的余地。城里来的信还压在账簿底下。等送走来取灯的人，再拆也来得及。"
+    "requirement.1": [
+      "last-words"
+    ],
+    "story.1": "奶奶请阿舟做完周家的灯。要是人家在凳子上坐下，就把手里的剪子放一放。",
+    "requirement.2": [
+      "farewell-host",
+      "zhou-farewell",
+      "chen-farewell"
+    ],
+    "story.2": "周家婶子坐在奶奶留下的竹凳上试提莲花灯。长案旁的花圈空口里，插着从奶奶屋门边剪来的桂花。"
+  },
+  {
+    "id": "lin-story",
+    "title": "等哥哥回来",
+    "requirement.1": [
+      "lin-benches"
+    ],
+    "story.1": "两条窄凳沿墙排开。端水的人一趟趟从门口走过。",
+    "requirement.2": [
+      "lin-light"
+    ],
+    "story.2": "天黑以后，小弟从门缝里看见一团亮。他说，门没换，我还认得。"
+  },
+  {
+    "id": "wang-story",
+    "title": "柜台上的照片",
+    "requirement.1": [
+      "wang-photo"
+    ],
+    "story.1": "来的人先认出照片里的糖罐，才指给旁边的人看穿围裙的是谁。",
+    "requirement.2": [
+      "wang-frame"
+    ],
+    "story.2": "相框卡在柜台木槽里，卷帘底下进风，照片也稳稳立着。"
+  },
+  {
+    "id": "du-story",
+    "title": "木匠的刨子",
+    "requirement.1": [
+      "du-plane"
+    ],
+    "story.1": "徒弟从宽口刨的尾巴上摸到了师父刻的姓。木把磨得发亮。",
+    "requirement.2": [
+      "du-cradle"
+    ],
+    "story.2": "刨子架在开槽的木托上。徒弟把最后一段木料放到边上。"
+  },
+  {
+    "id": "winter-story",
+    "title": "入冬后的第一笔账",
+    "requirement.1": [
+      "delivery-note",
+      "city-letter",
+      "ye-offer"
+    ],
+    "story.1": "新纸整箱预付。叶禾带来县城的工位，陈伯也能一起订纸。两张单子都压在柜台上。",
+    "requirement.2": [
+      "choose-city"
+    ],
+    "story.2": "阿舟把去县城的信收进行李。",
+    "requirement.3": [
+      "choose-village"
+    ],
+    "story.3": "阿舟把合订单留在账簿里。"
+  },
+  {
+    "id": "closed-shop",
+    "title": "旧街最后一单",
+    "requirement.1": [
+      "close-shop"
+    ],
+    "story.1": "纸花托给了陈伯，来取的人照着门上那张纸条走。竹凳也挪到了陈伯门廊下。"
+  },
+  {
+    "id": "city-story",
+    "title": "第七号",
+    "requirement.1": [
+      "city-finish"
+    ],
+    "story.1": "出货单多写了一行。花圈空出一处扎口，等家属自己添一枝花。"
+  },
+  {
+    "id": "new-page",
+    "title": "另起一页",
+    "requirement.1": [
+      "village-book"
+    ],
+    "story.1": "合订的钱与运费另起一页。上午开店，下午还有送货的活。"
+  },
+  {
+    "id": "village-story",
+    "title": "开春的灯",
+    "requirement.1": [
+      "village-finish"
+    ],
+    "story.1": "腊梅枝穿进竹底的扎口。陈伯坐在柜台外等雨小一些，取件日写在灯旁的纸条上。"
   }
 ]

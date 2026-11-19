@@ -6,7 +6,7 @@ const categories = {
   objects: { title: '物件', empty: '尚未查看物件。', fact: '材质', memory: '物件故事' },
 };
 
-export function createNotebook(data, progress, models, modelReady, onOpen) {
+export function createNotebook(data, progress, findModel, onOpen) {
   const dialog = document.querySelector('#journal');
   const detail = document.querySelector('#entry-detail');
   const title = document.querySelector('#entry-title');
@@ -40,6 +40,7 @@ export function createNotebook(data, progress, models, modelReady, onOpen) {
   let active = null;
   let preview = null;
   let entryToFocus = null;
+  let page = 0;
 
   function updateEntries() {
     const discovered = progress.discovered;
@@ -86,8 +87,9 @@ export function createNotebook(data, progress, models, modelReady, onOpen) {
     category = key;
     entryToFocus = fromNotebook ? entry.id : null;
     const labels = categories[key];
-    const model = key === 'objects' ? models.get(entry.id) : null;
+    const model = key === 'objects' ? findModel(entry) : null;
     active = model ? entry.id : null;
+    const request = ++page;
     kind.textContent = labels.title;
     title.textContent = entry.title;
     description.hidden = !entry.description;
@@ -109,7 +111,12 @@ export function createNotebook(data, progress, models, modelReady, onOpen) {
     back.hidden = false;
     showPage(false, Boolean(model));
     title.focus({ preventScroll: true });
-    if (model) drawModel(model);
+    if (model) {
+      drawModel(model);
+      model.ready?.then(() => {
+        if (dialog.open && active === entry.id && page === request) drawModel(model, true);
+      });
+    }
   }
 
   function makeEntry(entry) {
@@ -177,11 +184,6 @@ export function createNotebook(data, progress, models, modelReady, onOpen) {
     if (direction) preview.turn(direction * 0.38);
     else preview.reset();
   });
-  for (const [id, ready] of modelReady) {
-    ready.then(() => {
-      if (dialog.open && active === id) drawModel(models.get(id), true);
-    });
-  }
   dialog.addEventListener('close', () => {
     if (dialog.open) return;
     active = null;
