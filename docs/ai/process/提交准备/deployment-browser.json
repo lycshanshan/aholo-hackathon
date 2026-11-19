@@ -1,0 +1,16 @@
+{
+  "url": "https://www.modelscope.cn/studios/lycshanshan/lantern-keeper?mode=full&app_path=%2Fgame%2Findex.html",
+  "app": "https://lycshanshan-lantern-keeper.ms.show/game/?t=1795085184100&__theme=light&backend_url=/",
+  "title": "守灯人 · 病房里的话",
+  "chapter": "病房里的话",
+  "notebook": true,
+  "running": "true",
+  "playerGlb": true,
+  "secretStatus": {
+    "/.git/HEAD": 404,
+    "/.git/config": 404,
+    "/.env": 404,
+    "/keys.json": 404
+  },
+  "errors": []
+}

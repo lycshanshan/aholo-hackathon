@@ -1,0 +1,17 @@
+{
+  "docs/项目报告.md": {
+    "response": "docs/ai/process/提交准备/report-rename-response.json",
+    "sha256": "7cc57407b232896007a22ea619fd490a3ffef0369dd00dc4e00656886474f132",
+    "exact_match": true
+  },
+  "README.md": {
+    "response": "docs/ai/process/提交准备/readme-rename-response.json",
+    "sha256": "808c0b81d854d24f3db7787577af5f210d2399c32edd4e7af0204090d3c002c1",
+    "exact_match": true
+  },
+  "docs/小红书文案.md": {
+    "response": "docs/ai/process/提交准备/xiaohongshu-rename-response.json",
+    "sha256": "1541f797402cb1f9cc8516c831d0afde7c241395eb71498532f45e8e8a08f143",
+    "exact_match": true
+  }
+}

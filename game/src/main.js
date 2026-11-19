@@ -122,7 +122,7 @@ function markersFor(root, points) {
 }
 
 function showChapter(chapter) {
-  document.title = `守灯人 · ${chapter.title}`;
+  document.title = `长宁白事铺 · ${chapter.title}`;
   select('chapter-title').textContent = chapter.title;
   select('chapter-name').textContent = chapter.chapter;
   select('stage-chapter').textContent = chapter.chapter;

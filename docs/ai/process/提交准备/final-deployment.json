@@ -1,0 +1,13 @@
+{
+  "project": "长宁白事铺",
+  "studio": "https://www.modelscope.cn/studios/lycshanshan/lantern-keeper",
+  "deployment": {
+    "status": "Building",
+    "active_config": {
+      "hardware": "platform/2v-cpu-8g-mem",
+      "sdk_type": "static"
+    },
+    "created_at": "2026-11-19T10:43:56.000Z"
+  },
+  "final_verification": "用户要求不等待部署完成后检查"
+}
